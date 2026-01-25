@@ -36,6 +36,7 @@ logic [31:0] data_reg;
 logic [15:0] byte_adr;
 state_t state_reg;
 state_t state_next;
+wire shift_enable;
 
 assign shift_enable = (state_reg ==  S_SHIFT_CMD) || (state_reg ==  S_SHIFT_ADDR) ||
                       (state_reg ==  S_SHIFT_WRITE_DATA) || (state_reg ==  S_SHIFT_READ_DATA);
