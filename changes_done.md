@@ -55,15 +55,6 @@ The following table shows how internal signals are mapped to TinyTapeout pins:
 - `src/subservient_gpio.v` - GPIO peripheral (unchanged)
 - `src/RAM32.v` - Register file RAM macro (unchanged)
 
-## Verification Status
-
-| Check | Status | Notes |
-|-------|--------|-------|
-| Verilator Lint | ✅ Pass | Power pin warnings resolved with conditional compilation |
-| Yosys Synthesis | ✅ Pass | All signals properly declared and typed |
-| Port Compliance | ✅ Pass | Only standard TinyTapeout ports used |
-| Signal Assignment | ✅ Pass | All outputs assigned, proper blocking/non-blocking usage |
-
 ## Known Issues
 
 Idk wtf this is:
