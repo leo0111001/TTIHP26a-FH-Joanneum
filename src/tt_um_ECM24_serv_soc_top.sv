@@ -158,7 +158,7 @@ module tt_um_ECM24_serv_soc_top
      (
       .i_clk        (wb_clk),
       .i_rst        (wb_rst),
-      .i_timer_irq  (0'b0),
+      .i_timer_irq  (1'b0),
 
       .o_wb_mem_adr   (wb_mem_adr),
       .o_wb_mem_dat   (wb_mem_dat),
