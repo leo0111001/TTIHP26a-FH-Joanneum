@@ -9,6 +9,7 @@
 
 module tt_um_ECM24_serv_soc_top
 (
+ input wire clk,
  input wire  wb_clk,    // Wishbone clock
  input wire  wb_rst,    // Wishbone reset
  output wire q,          // GPIO output
