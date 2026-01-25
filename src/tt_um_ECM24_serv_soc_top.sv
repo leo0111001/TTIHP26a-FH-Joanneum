@@ -7,7 +7,7 @@
 // Create Date: 17.01.2026 11:15:30
 //////////////////////////////////////////////////////////////////////////////////
 
-module ECM24_serv_soc_top
+module tt_um_ECM24_serv_soc_top
 (
  input wire  wb_clk,    // Wishbone clock
  input wire  wb_rst,    // Wishbone reset
