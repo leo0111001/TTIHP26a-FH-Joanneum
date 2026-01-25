@@ -90,26 +90,3 @@ Dumping module `\tt_um_ECM24_serv_soc_top'.
 [12:31:59] ERROR LibreLane will now quit. __main__.py:188
 2026-01-25 12:31:59,911 - project - ERROR - harden failed
 
-## Build Configuration
-
-Current GitHub Actions workflow configuration:
-```yaml
-- name: Build GDS
-  uses: TinyTapeout/tt-gds-action@ttihp26a
-  with:
-    pdk: ihp-sg13g2
-    librelane-version: 3.0.0.dev44
-```
-
-## References
-
-- TinyTapeout Documentation: https://tinytapeout.com
-- IHP SG13G2 PDK: https://github.com/IHP-GmbH/IHP-Open-PDK
-- SERV CPU Core: https://github.com/olofk/serv
-- SystemVerilog Best Practices: Use of `` `default_nettype none`` and explicit signal declarations
-
----
-
-**Last Updated:** January 25, 2026  
-**Authors:** FH Joanneum Team  
-**TinyTapeout Submission:** TTIHP26a
