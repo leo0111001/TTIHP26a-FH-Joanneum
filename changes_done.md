@@ -58,7 +58,7 @@ The following table shows how internal signals are mapped to TinyTapeout pins:
 ## Known Issues
 
 Idk wtf this is:
-does this mean my total area used is 59% Chip area for module '\tt_um_ECM24_serv_soc_top': 111924.477000
+- Chip area for module '\tt_um_ECM24_serv_soc_top': 111924.477000
 of which used for sequential elements: 66477.801600 (59.40%)
 396. Executing Verilog backend.
 Dumping module `\tt_um_ECM24_serv_soc_top'.
