@@ -37,9 +37,9 @@ project:
     - "serv/serv_rf_ram_if.v"
     - "serv/serv_state.v"
     - "serv/serv_top.v"
-    - "servile_arbiter.v"
-    - "servile_mux.v"
-    - "servile.v"
+    - "serv/servile_arbiter.v"
+    - "serv/servile_mux.v"
+    - "serv/servile.v"
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 # This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
 pinout:
