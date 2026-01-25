@@ -1,3 +1,4 @@
+`default_nettype none
 `timescale 1ns / 1ps
 
 // Author:      David Hetzenauer (ESE24)
@@ -36,7 +37,19 @@ logic [31:0] data_reg;
 logic [15:0] byte_adr;
 state_t state_reg;
 state_t state_next;
+
+// Declare all wire signals
 wire shift_enable;
+wire write_full_word;
+wire write_first_half;
+wire write_second_half;
+wire write_byte_1;
+wire write_byte_2;
+wire write_byte_3;
+wire write_byte_4;
+wire shift_32_bits;
+wire shift_16_bits;
+wire shift_8_bits;
 
 assign shift_enable = (state_reg ==  S_SHIFT_CMD) || (state_reg ==  S_SHIFT_ADDR) ||
                       (state_reg ==  S_SHIFT_WRITE_DATA) || (state_reg ==  S_SHIFT_READ_DATA);
@@ -120,18 +133,18 @@ always_ff @(negedge clk) begin
     if (shift_enable) begin
         case(state_reg)
             S_SHIFT_CMD : 
-                spi_mosi = data_reg[7];
+                spi_mosi <= data_reg[7];
             S_SHIFT_ADDR : 
-                spi_mosi = data_reg[15];
+                spi_mosi <= data_reg[15];
             S_SHIFT_WRITE_DATA : begin
                 if(write_full_word || write_second_half || write_byte_4)
-                    spi_mosi = data_reg[31];
+                    spi_mosi <= data_reg[31];
                 if(write_byte_3)
-                    spi_mosi = data_reg[23];
+                    spi_mosi <= data_reg[23];
                 if(write_first_half || write_byte_2)
-                    spi_mosi = data_reg[15];
+                    spi_mosi <= data_reg[15];
                 if(write_byte_1)
-                    spi_mosi = data_reg[7];
+                    spi_mosi <= data_reg[7];
                 end
         endcase
     end
@@ -207,3 +220,4 @@ assign ack   = (state_reg == S_DONE);
 assign dat_o = data_reg;
     
 endmodule
+`default_nettype wire
