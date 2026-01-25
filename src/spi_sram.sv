@@ -6,9 +6,6 @@
 // Company:     FH Joanneum
 // Project:     TT SerV Core
 // Description: Wishbone interface for external SPI memory chips
-// Hardware:
-// - 23LC512 SRAM (Read and Write access)
-// - 25LC640A EEPROM (Only Read access)
 
 module spi_sram (
     input wire clk,
@@ -124,6 +121,9 @@ begin
             S_LOAD_READ_DATA : begin
                 data_reg[31:0] <= 32'h0;
                 end
+            
+            // FIX 1: Default added to prevent latch in sequential logic
+            default: data_reg <= data_reg;
         endcase
     end
 end
@@ -146,6 +146,9 @@ always_ff @(negedge clk) begin
                 if(write_byte_1)
                     spi_mosi <= data_reg[7];
                 end
+            
+            // FIX 2: Default added for non-covered states
+            default: spi_mosi <= 1'b0;
         endcase
     end
 end 
@@ -204,10 +207,11 @@ begin
             end
             
         S_DONE : begin
-            //if(!cyc)
                 state_next = S_IDLE; 
             end
         
+        // FIX 3: Default added to cover all 4-bit values (0-15)
+        default: state_next = S_IDLE;
     endcase
 end  
 
