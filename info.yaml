@@ -44,7 +44,7 @@ project:
 # This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
 pinout:
   # Inputs
-  ui[0]: ""
+  ui[0]: "SPI_MISO"
   ui[1]: ""
   ui[2]: ""
   ui[3]: ""
@@ -54,11 +54,11 @@ pinout:
   ui[7]: ""
 
   # Outputs
-  uo[0]: ""
-  uo[1]: ""
-  uo[2]: ""
-  uo[3]: ""
-  uo[4]: ""
+  uo[0]: "GPIO_OUT"
+  uo[1]: "SPI_MOSI"
+  uo[2]: "SPI_CLK"
+  uo[3]: "SPI_CS1_N"
+  uo[4]: "SPI_CS2_N"
   uo[5]: ""
   uo[6]: ""
   uo[7]: ""
@@ -72,6 +72,7 @@ pinout:
   uio[5]: ""
   uio[6]: ""
   uio[7]: ""
+
 
 # Do not change!
 yaml_version: 6
