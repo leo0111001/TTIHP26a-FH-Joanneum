@@ -53,6 +53,7 @@ module tt_um_ECM24_serv_soc_top
    wire spi_clk;
    wire spi_cs1_n;
    wire spi_cs2_n;
+   assign spi_cs2_n = 1'b1;
    
    assign uo_out[0] = gpio_out;
    assign uo_out[1] = spi_mosi;
