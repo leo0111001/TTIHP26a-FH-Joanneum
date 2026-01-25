@@ -9,6 +9,7 @@ This document summarizes all modifications made to adapt the SERV RISC-V SoC for
 | **tt_um_ECM24_serv_soc_top.sv** | Extra ports not in TinyTapeout interface | Removed `wb_clk`, `wb_rst`, `q`, `spi_miso`, `spi_mosi`, `spi_clk`, `spi_cs1`, `spi_cs2` from module declaration | TinyTapeout only supports standard interface: `ui_in[7:0]`, `uo_out[7:0]`, `uio_in[7:0]`, `uio_out[7:0]`, `uio_oe[7:0]`, `ena`, `clk`, `rst_n` |
 | **tt_um_ECM24_serv_soc_top.sv** | Unmapped pins | Added pin mapping section to connect internal signals to TinyTapeout I/O | Map SPI and GPIO to standard pins according to `info.yaml` |
 | **tt_um_ECM24_serv_soc_top.sv** | Unassigned outputs | Assigned all unused outputs to `1'b0` | TinyTapeout requires all outputs to be assigned |
+| **tt_um_ECM24_serv_soc_top.sv** | Signal was used without a driver | Assigned the signal `1'b1` | TinyTapeout and ASIC in general requires all used signals to be driven |
 | **tt_um_ECM24_serv_soc_top.sv** | RAM32 power pins | Added conditional `USE_POWER_PINS` wrapper around VPWR/VGND connections | RAM32 has conditional power pins; must match module definition |
 | **tt_um_ECM24_serv_soc_top.sv** | Missing copyright | Added TinyTapeout copyright header | Standard TinyTapeout requirement |
 | **tt_um_ECM24_serv_soc_top.sv** | Missing nettype directive | Added `` `default_nettype none`` | Best practice for TinyTapeout designs |
