@@ -1,7 +1,13 @@
+/*
+ * Copyright (c) 2026 FH Joanneum
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+`default_nettype none
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Module: ECM24_serv_soc_top
-// Description: SERV RISC-V SoC top-level module
+// Module: tt_um_ECM24_serv_soc_top
+// Description: SERV RISC-V SoC top-level module for TinyTapeout
 //              Integrates SERV CPU core with RAM and GPIO peripherals
 // 
 // Create Date: 17.01.2026 11:15:30
@@ -16,17 +22,9 @@ module tt_um_ECM24_serv_soc_top
  output wire [7:0] uio_oe,   // IOs: Enable path (active high: 0=input, 1=output)
  input  wire       ena,      // always 1 when the design is powered, so you can ignore it
  input  wire       clk,      // clock
- input  wire       rst_n,     // reset_n - low to reset
- input wire  wb_clk,    // Wishbone clock
- input wire  wb_rst,    // Wishbone reset
- output wire q,          // GPIO output
-
- input wire spi_miso,
- output wire spi_mosi,
- output wire spi_clk,
- output wire spi_cs1,
- output wire spi_cs2
+ input  wire       rst_n     // reset_n - low to reset
 );
+
    //=============================================================================
    // Parameters
    //=============================================================================
@@ -42,6 +40,36 @@ module tt_um_ECM24_serv_soc_top
    localparam csr_regs = with_csr*4;      // Number of CSR registers
    localparam rf_width = 32;              // Register file width
    localparam rf_l2d = $clog2(rf_width);  // Register file depth
+
+   //=============================================================================
+   // Pin Mapping
+   //=============================================================================
+   // Inputs
+   wire spi_miso = ui_in[0];
+   
+   // Outputs
+   wire gpio_out;
+   wire spi_mosi;
+   wire spi_clk;
+   wire spi_cs1_n;
+   wire spi_cs2_n;
+   
+   assign uo_out[0] = gpio_out;
+   assign uo_out[1] = spi_mosi;
+   assign uo_out[2] = spi_clk;
+   assign uo_out[3] = spi_cs1_n;
+   assign uo_out[4] = spi_cs2_n;
+   assign uo_out[5] = 1'b0;
+   assign uo_out[6] = 1'b0;
+   assign uo_out[7] = 1'b0;
+   
+   // Bidirectional pins not used
+   assign uio_out = 8'b0;
+   assign uio_oe  = 8'b0;
+   
+   // Internal clock and reset
+   wire wb_clk = clk;
+   wire wb_rst = ~rst_n;
 
    //=============================================================================
    // Wishbone Memory Bus Signals (CPU <-> RAM)
@@ -81,7 +109,7 @@ module tt_um_ECM24_serv_soc_top
       
     spi_sram ram_spi_if(
     .clk(wb_clk),
-    .rst_n(~wb_rst),
+    .rst_n(rst_n),
 
     .cyc(wb_mem_stb),     // cycle valid
     .adr(wb_mem_adr[15:2]),    // word address (14-bit for 64KB range)
@@ -95,9 +123,7 @@ module tt_um_ECM24_serv_soc_top
     .spi_miso(spi_miso),
     .spi_clk(spi_clk),
     .spi_mosi(spi_mosi),
-    .spi_cs_n(spi_cs1));
-
-
+    .spi_cs_n(spi_cs1_n));
 
    //=============================================================================
    // GPIO Module - Simple GPIO peripheral for output
@@ -110,7 +136,7 @@ module tt_um_ECM24_serv_soc_top
       .i_wb_stb (wb_ext_stb),
       .o_wb_rdt (wb_ext_rdt),
       .o_wb_ack (wb_ext_ack),
-      .o_gpio   (q));
+      .o_gpio   (gpio_out));
 
    //=============================================================================
    // Register File RAM - RAM32 macro with interface
@@ -149,7 +175,6 @@ module tt_um_ECM24_serv_soc_top
       .A0  (ram32_addr),
       .Di0 (ram32_din),
       .Do0 (ram32_dout));
-
 
    //=============================================================================
    // SERV CPU Core - Bit-serial RISC-V CPU
@@ -191,5 +216,7 @@ module tt_um_ECM24_serv_soc_top
       .o_rf_ren    (rf_ren),
       .i_rf_rdata  (rf_rdata));
 
+   // List all unused inputs to prevent warnings
+   wire _unused = &{ena, ui_in[7:1], uio_in, 1'b0};
 
 endmodule
