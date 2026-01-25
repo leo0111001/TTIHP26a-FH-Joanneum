@@ -17,8 +17,29 @@ project:
   # Source files must be in ./src and you must list each source file separately, one per line.
   # Don't forget to also update `PROJECT_SOURCES` in test/Makefile.
   source_files:
-    - "project.v"
-
+    - "tt_um_ECM24_serv_soc_top"
+    - "serv_ram32_if.sv"
+    - "spi_sram.sv"
+    - "subservient_gpio.v"
+    - "RAM32.v"
+    - "serv/serv_aligner.v"
+    - "serv/serv_alu.v"
+    - "serv/serv_bufreg.v"
+    - "serv/serv_bufreg2.v"
+    - "serv/serv_compdec.v"
+    - "serv/serv_csr.v"
+    - "serv/serv_ctrl.v"
+    - "serv/serv_debug.v"
+    - "serv/serv_decode.v"
+    - "serv/serv_immdec.v"
+    - "serv/serv_mem_if.v"
+    - "serv/serv_rf_if.v"
+    - "serv/serv_rf_ram_if.v"
+    - "serv/serv_state.v"
+    - "serv/serv_top.v"
+    - "servile_arbiter.v"
+    - "servile_mux.v"
+    - "servile.v"
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 # This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
 pinout:
