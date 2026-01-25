@@ -1,4 +1,5 @@
 `default_nettype none
+`timescale 1ns/1ps 
 /// sta-blackbox
 module serv_ram32_if
 #(    
