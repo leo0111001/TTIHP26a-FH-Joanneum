@@ -167,14 +167,16 @@ module tt_um_ECM24_serv_soc_top
       .o_ram_en   (ram32_en),
       .i_ram_dout (ram32_dout));
 
-   // RAM32 Macro Instance
+   // RAM32 Macro Instance with power pins
    RAM32 rf_ram
-     (.CLK (wb_clk),
-      .WE0 (ram32_we),
-      .EN0 (ram32_en),
-      .A0  (ram32_addr),
-      .Di0 (ram32_din),
-      .Do0 (ram32_dout));
+     (.CLK  (wb_clk),
+      .WE0  (ram32_we),
+      .EN0  (ram32_en),
+      .A0   (ram32_addr),
+      .Di0  (ram32_din),
+      .Do0  (ram32_dout),
+      .VPWR (1'b1),      // Connect to power
+      .VGND (1'b0));
 
    //=============================================================================
    // SERV CPU Core - Bit-serial RISC-V CPU
