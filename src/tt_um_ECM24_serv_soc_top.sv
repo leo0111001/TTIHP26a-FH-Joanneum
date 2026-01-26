@@ -46,6 +46,8 @@ module tt_um_ECM24_serv_soc_top
    //=============================================================================
    // Inputs
    wire spi_miso = ui_in[0];
+   wire gpio_module_in = ui_in[7:4];
+   wire gpio_module_out  = uo_out[7:4];
    
    // Outputs
    wire gpio_out;
@@ -55,14 +57,10 @@ module tt_um_ECM24_serv_soc_top
    wire spi_cs2_n;
    assign spi_cs2_n = 1'b1;
    
-   assign uo_out[0] = gpio_out;
-   assign uo_out[1] = spi_mosi;
-   assign uo_out[2] = spi_clk;
-   assign uo_out[3] = spi_cs1_n;
-   assign uo_out[4] = spi_cs2_n;
-   assign uo_out[5] = 1'b0;
-   assign uo_out[6] = 1'b0;
-   assign uo_out[7] = 1'b0;
+   assign uo_out[0] = spi_mosi;
+   assign uo_out[1] = spi_clk;
+   assign uo_out[2] = spi_cs1_n;
+   assign uo_out[3] = spi_cs2_n;
    
    // Bidirectional pins not used
    assign uio_out = 8'b0;
@@ -129,15 +127,22 @@ module tt_um_ECM24_serv_soc_top
    //=============================================================================
    // GPIO Module - Simple GPIO peripheral for output
    //=============================================================================
-   subservient_gpio gpio
-     (.i_wb_clk (wb_clk),
-      .i_wb_rst (wb_rst),
-      .i_wb_dat (wb_ext_dat[0]),
-      .i_wb_we  (wb_ext_we),
-      .i_wb_stb (wb_ext_stb),
-      .o_wb_rdt (wb_ext_rdt),
-      .o_wb_ack (wb_ext_ack),
-      .o_gpio   (gpio_out));
+
+      
+     gpio_if  u_gpio_if (
+      .i_wb_clk  (wb_clk),
+      .i_wb_rst  (wb_rst),
+
+      .i_wb_adr  (wb_ext_adr),
+      .i_wb_dat  (wb_ext_dat),
+      .i_wb_we   (wb_ext_we),
+      .i_wb_stb  (wb_ext_stb),
+      .o_wb_rdt  (wb_ext_rdt),
+      .o_wb_ack  (wb_ext_ack),
+
+      .i_gpio_in (ui_in[7:4]),
+      .o_gpio_out(uo_out[7:4])
+   );
 
    //=============================================================================
    // Register File RAM - RAM32 macro with interface
@@ -223,6 +228,6 @@ module tt_um_ECM24_serv_soc_top
       .i_rf_rdata  (rf_rdata));
 
    // List all unused inputs to prevent warnings
-   wire _unused = &{ena, ui_in[7:1], uio_in, 1'b0};
+   wire _unused = &{ena, ui_in[7:6], uio_in, 1'b0};
 
 endmodule
