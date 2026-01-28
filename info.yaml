@@ -20,7 +20,6 @@ project:
     - "tt_um_ECM24_serv_soc_top.sv"
     - "serv_ram32_if.sv"
     - "spi_sram.sv"
-    - "subservient_gpio.v"
     - "RAM32.v"
     - "gpio_if.sv"
     - "serv/serv_aligner.v"
